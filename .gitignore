@@ -1,3 +1,9 @@
+# binary
+208dowels
+
+# stack
+.stack-work
+
 # sublime-text
 *.sublime-project
 *.sublime-workspace

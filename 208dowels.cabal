@@ -1,0 +1,62 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 8b9729125b8c75abcf5fe2a49d698f4db71f2f97d13038a8fa5dc93ed7e0013b
+
+name:           208dowels
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/208dowels#readme>
+homepage:       https://github.com/githubuser/208dowels#readme
+bug-reports:    https://github.com/githubuser/208dowels/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2019 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/208dowels
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_208dowels
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable 208dowels
+  main-is: Main.hs
+  other-modules:
+      Paths_208dowels
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      208dowels
+    , base >=4.7 && <5
+  default-language: Haskell2010
+
+test-suite 208dowels-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_208dowels
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      208dowels
+    , base >=4.7 && <5
+  default-language: Haskell2010
