@@ -27,7 +27,8 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Utility
+      ProcessArgs
   other-modules:
       Paths_208dowels
   hs-source-dirs:
