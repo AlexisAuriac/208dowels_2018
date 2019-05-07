@@ -2,7 +2,8 @@ module Utility (
     allElemsOf,
     isUint,
     isInt,
-    printList
+    printList,
+    average
 ) where
 
 allElemsOf :: (Eq a) => [a] -> [a] -> Bool
@@ -25,3 +26,9 @@ printList [] _ = return ()
 printList (x:xs) f = do
     f x
     printList xs f
+
+average :: (Integral a) => [a] -> Float
+average arr = sumArr / len
+    where
+        sumArr = fromIntegral (sum arr) :: Float
+        len = fromIntegral (length arr) :: Float
