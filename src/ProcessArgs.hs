@@ -21,6 +21,7 @@ processArgv' :: [String] -> String -> [Int]
 processArgv' argv progName
     | length argv /= 9 = error $ usage progName
     | not $ allInts = error "All arguments must be integers"
+    | sum converted /= 100 = error "The sum of all the observed classes must be 100"
     | otherwise = converted
     where
         resTestInts = map isInt argv
