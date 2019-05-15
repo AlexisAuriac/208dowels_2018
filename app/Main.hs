@@ -4,11 +4,13 @@ import System.Exit
 import Control.Exception
 import Text.Printf
 
+import Utility
 import ProcessArgs
 import MathFunctions
-import Pack
-import DisplayClasses
 import Constants
+import Pack
+import PacksTheoricalSizes
+import DisplayClasses
 
 displayDistribution :: Float -> IO ()
 displayDistribution p = printf "Distribution:\t\tB(%d, %.4f)\n" (100 :: Int) p
@@ -18,7 +20,8 @@ dowels = do
     observedClasses <- processArgv
     let classPacks = packClasses observedClasses
     let p = calcP observedClasses (nbSamples * nbPiecesPerSample)
-    displayClasses classPacks p
+    let thSizes = packsTheoricalSizes p classPacks
+    displayClasses classPacks thSizes
     displayDistribution p
 
 main :: IO ()

@@ -22,36 +22,32 @@ displayPacks' (p:packs) idx = do
         else printf "%d\t| " idx
     displayPacks' packs (idx + sizePack)
 
-displayPacksSums :: [[Int]] -> IO ()
-displayPacksSums packs = do
+displayPacksValues :: [[Int]] -> IO ()
+displayPacksValues packs = do
     putStr "\t0x\t| "
-    displayPacksSums' packs
+    displayPacksValues' packs
     putStrLn "100"
 
-displayPacksSums' :: [[Int]] -> IO ()
-displayPacksSums' [] = return ()
-displayPacksSums' (x:xs) = do
+displayPacksValues' :: [[Int]] -> IO ()
+displayPacksValues' [] = return ()
+displayPacksValues' (x:xs) = do
     printf "%d\t| " (sum x)
-    displayPacksSums' xs
+    displayPacksValues' xs
 
-displayTheoricalSizes :: [[Int]] -> Float -> IO ()
-displayTheoricalSizes packs p = do
+displayTheoricalSizes :: [Float] -> IO ()
+displayTheoricalSizes packs = do
     putStr "\tTx\t| "
-    displayTheoricalSizes' (map length packs) p 0 0.0
+    displayTheoricalSizes' packs
     putStrLn "100"
 
-displayTheoricalSizes' :: [Int] -> Float -> Int -> Float -> IO ()
-displayTheoricalSizes' (x:[]) p idx t = do
-    let tmp = map (\y -> theoricalSize y p nbSamples nbPiecesPerSample) [idx..100]
-    printf "%.1f\t| " (sum tmp)
-displayTheoricalSizes' (0:xs) p idx t = do
-    printf "%.1f\t| " t
-    displayTheoricalSizes' xs p idx 0.0
-displayTheoricalSizes' (x:xs) p idx t = do
-    displayTheoricalSizes' (x-1:xs) p (idx+1) (t + (theoricalSize idx p nbSamples nbPiecesPerSample))
+displayTheoricalSizes' :: [Float] -> IO ()
+displayTheoricalSizes' [] = return ()
+displayTheoricalSizes' (x:xs) = do
+    printf "%.1f\t| " x
+    displayTheoricalSizes' xs
 
-displayClasses :: [[Int]] -> Float -> IO ()
-displayClasses packs p = do
+displayClasses :: [[Int]] -> [Float] -> IO ()
+displayClasses packs thSizes = do
     displayPacks packs
-    displayPacksSums packs
-    displayTheoricalSizes packs p
+    displayPacksValues packs
+    displayTheoricalSizes thSizes

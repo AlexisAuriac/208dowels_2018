@@ -30,9 +30,10 @@ library
       Utility
       ProcessArgs
       MathFunctions
-      Pack
-      DisplayClasses
       Constants
+      Pack
+      PacksTheoricalSizes
+      DisplayClasses
   other-modules:
       Paths_208dowels
   hs-source-dirs:
