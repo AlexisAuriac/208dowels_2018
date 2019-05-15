@@ -38,9 +38,13 @@ average arr = sumArr / len
         len = fromIntegral (length arr) :: Float
 
 mergeFirstTwo :: [a] -> (a -> a -> a) -> [a]
+mergeFirstTwo [] _ = error "Not enough elements to merge"
+mergeFirstTwo (_:[]) _ = error "Not enough elements to merge"
 mergeFirstTwo (x:y:xs) merger = (x `merger` y) : xs
 
 mergeLastTwo :: [a] -> (a -> a -> a) -> [a]
+mergeLastTwo [] _ = error "Not enough elements to merge"
+mergeLastTwo (_:[]) _ = error "Not enough elements to merge"
 mergeLastTwo xs merger = start ++ merged
     where
         start = take ((length xs) - 2) xs
@@ -49,7 +53,11 @@ mergeLastTwo xs merger = start ++ merged
         merged = [last1 `merger` last2]
 
 mergePrevious :: [a] -> (a -> a -> a) -> Int -> [a]
-mergePrevious xs merger idx = start ++ [merged] ++ end
+mergePrevious [] _ _ = error "Not enough elements to merge"
+mergePrevious (_:[]) _ _ = error "Not enough elements to merge"
+mergePrevious xs merger idx
+    | idx <= 0 || idx >= (length xs) = error "Invalid index"
+    | otherwise = start ++ [merged] ++ end
     where
         start = take (idx - 1) xs
         end = drop (idx + 1) xs
@@ -58,7 +66,7 @@ mergePrevious xs merger idx = start ++ [merged] ++ end
         merged = merge2 `merger` merge1
 
 findBest :: [a] -> (a -> a -> Bool) -> (Int, a)
-findBest [] _ = error "No elements"
+findBest [] _ = error "Empty list"
 findBest (x:xs) cmp = findBest' xs cmp 0 x 1
 
 findBest' :: [a] -> (a -> a -> Bool) -> Int -> a -> Int -> (Int, a)
