@@ -24,7 +24,7 @@ displayPacks' (p:packs) idx = do
 
 displayPacksValues :: [[Int]] -> IO ()
 displayPacksValues packs = do
-    putStr "\t0x\t| "
+    putStr "\tOx\t| "
     displayPacksValues' packs
     putStrLn "100"
 
