@@ -7,7 +7,7 @@ module MathFunctions (
 binCoef :: Integer -> Integer -> Integer
 binCoef _ 0 = 1
 binCoef 0 _ = 0
-binCoef n k = (binCoef (n-1) (k-1)) * (n `div` k)
+binCoef n k = ((binCoef (n-1) (k-1)) * n) `div` k
 
 calcP :: [Int] -> Float -> Float
 calcP classes n = calcP' (map toFloat classes) n 0.0 0.0
