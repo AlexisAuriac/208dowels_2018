@@ -33,6 +33,7 @@ library
       Constants
       Pack
       PacksTheoricalSizes
+      ChiSquared
       DisplayClasses
   other-modules:
       Paths_208dowels
