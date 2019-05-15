@@ -27,4 +27,3 @@ processArgv' argv progName
         resTestInts = map isInt argv
         allInts = foldr (\x y -> x && y) True resTestInts
         converted = map (\x -> read x :: Int) argv
-

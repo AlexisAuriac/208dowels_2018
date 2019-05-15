@@ -31,6 +31,8 @@ library
       ProcessArgs
       MathFunctions
       Pack
+      DisplayClasses
+      Constants
   other-modules:
       Paths_208dowels
   hs-source-dirs:
