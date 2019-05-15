@@ -1,0 +1,7 @@
+	x	| 0-1	| 2	| 3	| 4	| 5	| 6	| 7+	| Total
+	Ox	| 10	| 10	| 18	| 20	| 19	| 11	| 12	| 100
+	Tx	| 8.0	| 13.8	| 19.2	| 19.9	| 16.3	| 11.1	| 11.7	| 100
+Distribution:		B(100, 0.0410)
+Chi-squared:		2.029
+Degrees of freedom:	5
+Fit validity:		80% < P < 90%
