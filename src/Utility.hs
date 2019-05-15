@@ -6,7 +6,8 @@ module Utility (
     average,
     mergeFirstTwo,
     mergeLastTwo,
-    mergePrevious
+    mergePrevious,
+    findBest
 ) where
 
 allElemsOf :: (Eq a) => [a] -> [a] -> Bool
@@ -55,3 +56,13 @@ mergePrevious xs merger idx = start ++ [merged] ++ end
         merge1 = xs !! idx
         merge2 = xs !! (idx - 1)
         merged = merge2 `merger` merge1
+
+findBest :: [a] -> (a -> a -> Bool) -> (Int, a)
+findBest [] _ = error "No elements"
+findBest (x:xs) cmp = findBest' xs cmp 0 x 1
+
+findBest' :: [a] -> (a -> a -> Bool) -> Int -> a -> Int -> (Int, a)
+findBest' [] _ bestIdx bestVal _ = (bestIdx, bestVal)
+findBest' (x:xs) cmp bestIdx bestVal curIdx
+    | x `cmp` bestVal = findBest' xs cmp curIdx x (curIdx+1)
+    | otherwise = findBest' xs cmp bestIdx bestVal (curIdx+1)

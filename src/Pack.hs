@@ -16,18 +16,8 @@ packClasses' packs
         sumClasses = map (\xs -> sum xs) packs
         supMin = map (> 9) sumClasses
         allSupMin = foldr (\x y -> x && y) True supMin
-        (smallestIdx, _) = findSmallestPack sumClasses
+        (smallestIdx, _) = findBest sumClasses (<)
         newPacks = mergeSmallestWithNeighbor packs smallestIdx
-
-findSmallestPack :: [Int] -> (Int, Int)
-findSmallestPack [] = error "Need at least one pack"
-findSmallestPack (p:packs) = findSmallestPack' packs 0 p 1
-
-findSmallestPack' :: [Int] -> Int -> Int -> Int -> (Int, Int)
-findSmallestPack' [] bestIdx bestVal _ = (bestIdx, bestVal)
-findSmallestPack' (p:packs) bestIdx bestVal curIdx
-    | p < bestVal = findSmallestPack' packs curIdx p (curIdx+1)
-    | otherwise = findSmallestPack' packs bestIdx bestVal (curIdx+1)
 
 mergeSmallestWithNeighbor :: [[Int]] -> Int -> [[Int]]
 mergeSmallestWithNeighbor packs idx
