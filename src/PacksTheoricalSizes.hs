@@ -9,7 +9,7 @@ packsRanges :: [[Int]] -> [(Int, Int)]
 packsRanges packs = packsRanges' packs 0 []
 
 packsRanges' :: [[Int]] -> Int -> [(Int, Int)] -> [(Int, Int)]
-packsRanges' [] _ res = reverse res
+packsRanges' (_:[]) idx res = reverse $ ((idx, 100) : res)
 packsRanges' (p:packs) idx res = packsRanges' packs newIdx newRes
     where
         newIdx = idx + (length p)
