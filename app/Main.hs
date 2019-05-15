@@ -6,35 +6,13 @@ import Text.Printf
 
 import Utility
 import ProcessArgs
+import MathFunctions
 
 nbSamples :: Float
 nbSamples = 100.0
 
 nbPiecesPerSample :: Float
 nbPiecesPerSample = 100.0
-
-calcP :: [Int] -> Float
-calcP classes = calcP' (map toFloat classes) 0.0 0.0
-    where
-        toFloat i = fromIntegral i :: Float
-
-calcP' :: [Float] -> Float -> Float -> Float
-calcP' [] _ res = res / (nbSamples * nbPiecesPerSample)
-calcP' (val:values) x res = calcP' values (x+1) (res + val*x)
-
-binCoef :: Integer -> Integer -> Integer
-binCoef n 0 = 1
-binCoef 0 k = 0
-binCoef n k = binCoef (n-1) (k-1) * n `div` k
-
-theoricSize :: Int -> Float -> Float
-theoricSize x p = n1 * coef * (p**xf) * ((1-p)**(n1-xf))
-    where
-        xf = fromIntegral x :: Float
-        xi = fromIntegral x :: Integer
-        n1 = 100.0 :: Float
-        n2 = 100 :: Integer
-        coef = fromIntegral (binCoef n2 xi) :: Float
 
 packClasses :: [Int] -> [[Int]]
 packClasses classes = packClasses' init
@@ -125,13 +103,13 @@ displayTheoricSizes packs p = do
 
 displayTheoricSizes' :: [Int] -> Float -> Int -> Float -> IO ()
 displayTheoricSizes' (x:[]) p idx t = do
-    let tmp = map (\y -> theoricSize y p) [idx..100]
+    let tmp = map (\y -> theoricSize y p nbSamples nbPiecesPerSample) [idx..100]
     printf "%.1f\t| " (sum tmp)
 displayTheoricSizes' (0:xs) p idx t = do
     printf "%.1f\t| " t
     displayTheoricSizes' xs p idx 0.0
 displayTheoricSizes' (x:xs) p idx t = do
-    displayTheoricSizes' (x-1:xs) p (idx+1) (t + (theoricSize idx p))
+    displayTheoricSizes' (x-1:xs) p (idx+1) (t + (theoricSize idx p nbSamples nbPiecesPerSample))
 
 displayClasses :: [[Int]] -> Float -> IO ()
 displayClasses packs p = do
@@ -146,7 +124,7 @@ dowels :: IO ()
 dowels = do
     observedClasses <- processArgv
     let classPacks = packClasses observedClasses
-    let p = calcP observedClasses
+    let p = calcP observedClasses (nbSamples * nbPiecesPerSample)
     displayClasses classPacks p
     displayDistribution p
 

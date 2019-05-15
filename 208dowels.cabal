@@ -29,6 +29,7 @@ library
   exposed-modules:
       Utility
       ProcessArgs
+      MathFunctions
   other-modules:
       Paths_208dowels
   hs-source-dirs:
