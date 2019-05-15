@@ -22,16 +22,16 @@ displayPacks' (p:packs) idx = do
         else printf "%d\t| " idx
     displayPacks' packs (idx + sizePack)
 
-displayPacksValues :: [[Int]] -> IO ()
-displayPacksValues packs = do
+displayPacksValues :: [Int] -> IO ()
+displayPacksValues values = do
     putStr "\tOx\t| "
-    displayPacksValues' packs
+    displayPacksValues' values
     putStrLn "100"
 
-displayPacksValues' :: [[Int]] -> IO ()
+displayPacksValues' :: [Int] -> IO ()
 displayPacksValues' [] = return ()
 displayPacksValues' (x:xs) = do
-    printf "%d\t| " (sum x)
+    printf "%d\t| " x
     displayPacksValues' xs
 
 displayTheoricalSizes :: [Float] -> IO ()
@@ -49,5 +49,5 @@ displayTheoricalSizes' (x:xs) = do
 displayClasses :: [[Int]] -> [Float] -> IO ()
 displayClasses packs thSizes = do
     displayPacks packs
-    displayPacksValues packs
+    displayPacksValues (map sum packs)
     displayTheoricalSizes thSizes
