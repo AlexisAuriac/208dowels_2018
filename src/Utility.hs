@@ -3,7 +3,10 @@ module Utility (
     isUint,
     isInt,
     printList,
-    average
+    average,
+    mergeFirstTwo,
+    mergeLastTwo,
+    mergePrevious
 ) where
 
 allElemsOf :: (Eq a) => [a] -> [a] -> Bool
@@ -32,3 +35,23 @@ average arr = sumArr / len
     where
         sumArr = fromIntegral (sum arr) :: Float
         len = fromIntegral (length arr) :: Float
+
+mergeFirstTwo :: [a] -> (a -> a -> a) -> [a]
+mergeFirstTwo (x:y:xs) merger = (x `merger` y) : xs
+
+mergeLastTwo :: [a] -> (a -> a -> a) -> [a]
+mergeLastTwo xs merger = start ++ merged
+    where
+        start = take ((length xs) - 2) xs
+        last1 = last xs
+        last2 = xs !! ((length xs) - 2)
+        merged = [last1 `merger` last2]
+
+mergePrevious :: [a] -> (a -> a -> a) -> Int -> [a]
+mergePrevious xs merger idx = start ++ [merged] ++ end
+    where
+        start = take (idx - 1) xs
+        end = drop (idx + 1) xs
+        merge1 = xs !! idx
+        merge2 = xs !! (idx - 1)
+        merged = merge2 `merger` merge1

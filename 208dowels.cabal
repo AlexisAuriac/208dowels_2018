@@ -30,6 +30,7 @@ library
       Utility
       ProcessArgs
       MathFunctions
+      Pack
   other-modules:
       Paths_208dowels
   hs-source-dirs:

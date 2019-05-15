@@ -7,66 +7,13 @@ import Text.Printf
 import Utility
 import ProcessArgs
 import MathFunctions
+import Pack
 
 nbSamples :: Float
 nbSamples = 100.0
 
 nbPiecesPerSample :: Float
 nbPiecesPerSample = 100.0
-
-packClasses :: [Int] -> [[Int]]
-packClasses classes = packClasses' init
-    where init = map (\x -> [x]) classes
-
-findSmallestPack :: [Int] -> (Int, Int)
-findSmallestPack [] = error "Need at least one pack"
-findSmallestPack (p:packs) = findSmallestPack' packs 0 p 1
-
-findSmallestPack' :: [Int] -> Int -> Int -> Int -> (Int, Int)
-findSmallestPack' [] bestIdx bestVal _ = (bestIdx, bestVal)
-findSmallestPack' (p:packs) bestIdx bestVal curIdx
-    | p < bestVal = findSmallestPack' packs curIdx p (curIdx+1)
-    | otherwise = findSmallestPack' packs bestIdx bestVal (curIdx+1)
-
-mergeFirstTwo :: [[a]] -> [[a]]
-mergeFirstTwo (x:y:xs) = (x ++ y) : xs
-
-mergeLastTwo :: [[a]] -> [[a]]
-mergeLastTwo xs = reverse $ (correctFirst : (tail insertedReverse))
-    where
-        insertedReverse = mergeFirstTwo (reverse xs)
-        correctFirst = reverse $ head insertedReverse
-
-mergePrevious :: [[a]] -> Int -> [[a]]
-mergePrevious xs idx = start ++ [merged] ++ end
-    where
-        start = take (idx - 1) xs
-        end = drop (idx + 1) xs
-        merge1 = xs !! idx
-        merge2 = xs !! (idx - 1)
-        merged = merge2 ++ merge1
-
-mergeSmallestWithNeighbor :: [[Int]] -> Int -> [[Int]]
-mergeSmallestWithNeighbor packs idx
-    | length packs == 1 = packs
-    | idx == length packs - 1 = mergeLastTwo packs
-    | idx == 0 = mergeFirstTwo packs
-    | sum1 < sum2 = mergePrevious packs idx
-    | otherwise = mergePrevious packs (idx + 1)
-    where
-        sum1 = sum (packs !! (idx - 1))
-        sum2 = sum (packs !! (idx + 1))
-
-packClasses' :: [[Int]] -> [[Int]]
-packClasses' packs
-    | allSupMin = packs
-    | otherwise = packClasses' newPacks
-    where
-        sumClasses = map (\xs -> sum xs) packs
-        supMin = map (> 9) sumClasses
-        allSupMin = foldr (\x y -> x && y) True supMin
-        (smallestIdx, _) = findSmallestPack sumClasses
-        newPacks = mergeSmallestWithNeighbor packs smallestIdx
 
 displayPacks :: [[Int]] -> IO ()
 displayPacks packs = do
