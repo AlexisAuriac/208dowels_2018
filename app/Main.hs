@@ -4,7 +4,6 @@ import System.Exit
 import Control.Exception
 import Text.Printf
 
-import Utility
 import ProcessArgs
 import MathFunctions
 import Pack

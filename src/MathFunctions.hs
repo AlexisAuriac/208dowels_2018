@@ -1,7 +1,7 @@
 module MathFunctions (
     binCoef,
     calcP,
-    theoricSize
+    theoricalSize
 ) where
 
 binCoef :: Integer -> Integer -> Integer
@@ -18,12 +18,11 @@ calcP' :: [Float] -> Float -> Float -> Float -> Float
 calcP' [] n _ res = res / n
 calcP' (val:values) n x res = calcP' values n (x+1) (res + val*x)
 
-theoricSize :: Int -> Float -> Float -> Float -> Float
-theoricSize x p nbSamples sizeSmaple =
+theoricalSize :: Int -> Float -> Float -> Float -> Float
+theoricalSize x p nbSamples sizeSmaple =
     nbSamples * coef * (p**xf) * ((1-p)**(nbSamples-xf))
     where
         xf = fromIntegral x :: Float
         xi = fromIntegral x :: Integer
-        -- nf = 100.0 :: Float
-        ni = 100 :: Integer
+        ni = round sizeSmaple
         coef = fromIntegral (binCoef ni xi) :: Float

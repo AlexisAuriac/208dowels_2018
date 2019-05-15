@@ -4,11 +4,8 @@ module DisplayClasses (
 
 import Text.Printf
 
--- import Utility
--- import ProcessArgs
 import MathFunctions
 import Constants
--- import Pack
 
 displayPacks :: [[Int]] -> IO ()
 displayPacks packs = do
@@ -37,27 +34,24 @@ displayPacksSums' (x:xs) = do
     printf "%d\t| " (sum x)
     displayPacksSums' xs
 
-displayTheoricSizes :: [[Int]] -> Float -> IO ()
-displayTheoricSizes packs p = do
+displayTheoricalSizes :: [[Int]] -> Float -> IO ()
+displayTheoricalSizes packs p = do
     putStr "\tTx\t| "
-    displayTheoricSizes' (map length packs) p 0 0.0
+    displayTheoricalSizes' (map length packs) p 0 0.0
     putStrLn "100"
 
-displayTheoricSizes' :: [Int] -> Float -> Int -> Float -> IO ()
-displayTheoricSizes' (x:[]) p idx t = do
-    let tmp = map (\y -> theoricSize y p nbSamples nbPiecesPerSample) [idx..100]
+displayTheoricalSizes' :: [Int] -> Float -> Int -> Float -> IO ()
+displayTheoricalSizes' (x:[]) p idx t = do
+    let tmp = map (\y -> theoricalSize y p nbSamples nbPiecesPerSample) [idx..100]
     printf "%.1f\t| " (sum tmp)
-displayTheoricSizes' (0:xs) p idx t = do
+displayTheoricalSizes' (0:xs) p idx t = do
     printf "%.1f\t| " t
-    displayTheoricSizes' xs p idx 0.0
-displayTheoricSizes' (x:xs) p idx t = do
-    displayTheoricSizes' (x-1:xs) p (idx+1) (t + (theoricSize idx p nbSamples nbPiecesPerSample))
+    displayTheoricalSizes' xs p idx 0.0
+displayTheoricalSizes' (x:xs) p idx t = do
+    displayTheoricalSizes' (x-1:xs) p (idx+1) (t + (theoricalSize idx p nbSamples nbPiecesPerSample))
 
 displayClasses :: [[Int]] -> Float -> IO ()
 displayClasses packs p = do
     displayPacks packs
     displayPacksSums packs
-    displayTheoricSizes packs p
-
-displayDistribution :: Float -> IO ()
-displayDistribution p = printf "Distribution:\t\tB(%d, %.4f)\n" (100 :: Int) p
+    displayTheoricalSizes packs p
