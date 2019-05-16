@@ -2,9 +2,11 @@ module ChiSquared (
     chiSquared
 ) where
 
+import Utility
+
 chiSquared :: [Int] -> [Float] -> Float
 chiSquared values thSizes = chiSquared' fValues thSizes 0.0
-    where fValues = map (\x -> fromIntegral x :: Float) values
+    where fValues = map iToF values
 
 chiSquared' :: [Float] -> [Float] -> Float -> Float
 chiSquared' [] [] res = res

@@ -12,6 +12,7 @@ import Pack
 import PacksTheoricalSizes
 import ChiSquared
 import DisplayClasses
+import FitValidity
 
 displayDistribution :: Float -> IO ()
 displayDistribution p = printf "Distribution:\t\tB(%d, %.4f)\n" (100 :: Int) p
@@ -31,11 +32,13 @@ dowels = do
     let thSizes = packsTheoricalSizes p classPacks
     let x2 = chiSquared classValues thSizes
     let freedom = (length classPacks) - 2
+    let fitValidity = getFitValidity x2 freedom
 
     displayClasses classPacks thSizes
     displayDistribution p
     displayChiSquared x2
     displayDegreesFreedom freedom
+    displayFitValidity fitValidity
 
 main :: IO ()
 main = do

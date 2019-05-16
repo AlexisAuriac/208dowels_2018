@@ -35,6 +35,7 @@ library
       PacksTheoricalSizes
       ChiSquared
       DisplayClasses
+      FitValidity
   other-modules:
       Paths_208dowels
   hs-source-dirs:
