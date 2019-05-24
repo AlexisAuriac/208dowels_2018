@@ -6,7 +6,7 @@ import Utility
 
 chiSquared :: [Int] -> [Float] -> Float
 chiSquared values thSizes = chiSquared' fValues thSizes 0.0
-    where fValues = map iToF values
+    where fValues = map fromIntegral values
 
 chiSquared' :: [Float] -> [Float] -> Float -> Float
 chiSquared' [] [] res = res

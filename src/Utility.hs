@@ -7,12 +7,8 @@ module Utility (
     mergeFirstTwo,
     mergeLastTwo,
     mergePrevious,
-    findBest,
-    iToF
+    findBest
 ) where
-
-iToF :: (Integral a) => a -> Float
-iToF x = fromIntegral x :: Float
 
 allElemsOf :: (Eq a) => [a] -> [a] -> Bool
 allElemsOf [] _ = True
@@ -38,8 +34,8 @@ printList (x:xs) f = do
 average :: (Integral a) => [a] -> Float
 average arr = sumArr / len
     where
-        sumArr = iToF (sum arr)
-        len = iToF (length arr)
+        sumArr = fromIntegral (sum arr)
+        len = fromIntegral (length arr)
 
 mergeFirstTwo :: [a] -> (a -> a -> a) -> [a]
 mergeFirstTwo [] _ = error "Not enough elements to merge"

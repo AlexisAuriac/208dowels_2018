@@ -23,22 +23,29 @@ displayChiSquared x2 = printf "Chi-squared:\t\t%.3f\n" x2
 displayDegreesFreedom :: Int -> IO ()
 displayDegreesFreedom freedom = printf "Degrees of freedom:\t%d\n" freedom
 
-dowels :: IO ()
-dowels = do
-    observedClasses <- processArgv
-    let classPacks = packClasses observedClasses
-    let classValues = map sum classPacks
-    let p = calcP observedClasses (nbSamples * nbPiecesPerSample)
-    let thSizes = packsTheoricalSizes p classPacks
-    let x2 = chiSquared classValues thSizes
-    let freedom = (length classPacks) - 2
-    let fitValidity = getFitValidity x2 freedom
-
+displayDowels :: ([[Int]], [Float], Float, Float, Int, (Int, Int)) -> IO ()
+displayDowels (classPacks, thSizes, p, x2, freedom, fitValidity) = do
     displayClasses classPacks thSizes
     displayDistribution p
     displayChiSquared x2
     displayDegreesFreedom freedom
     displayFitValidity fitValidity
+
+getValuesToDisplay :: [Int] -> ([[Int]], [Float], Float, Float, Int, (Int, Int))
+getValuesToDisplay classes = (classPacks, thSizes, p, x2, freedom, fitValidity)
+    where
+        classPacks = packClasses classes
+        classValues = map sum classPacks
+        p = calcP classes (nbSamples * nbPiecesPerSample)
+        thSizes = packsTheoricalSizes p classPacks
+        x2 = chiSquared classValues thSizes
+        freedom = (length classPacks) - 2
+        fitValidity = getFitValidity x2 freedom
+
+dowels :: IO ()
+dowels = do
+    observedClasses <- processArgv
+    displayDowels $ getValuesToDisplay observedClasses
 
 main :: IO ()
 main = do

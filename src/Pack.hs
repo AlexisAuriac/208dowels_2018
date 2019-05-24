@@ -6,16 +6,16 @@ import Utility
 
 packClasses :: [Int] -> [[Int]]
 packClasses classes = packClasses' boxed
-    where boxed = map (\x -> [x]) classes
+    where boxed = [[i] | i <- classes]
 
 packClasses' :: [[Int]] -> [[Int]]
 packClasses' packs
     | allSupMin = packs
     | otherwise = packClasses' newPacks
     where
-        sumClasses = map (\xs -> sum xs) packs
+        sumClasses = map sum packs
         supMin = map (> 9) sumClasses
-        allSupMin = foldr (\x y -> x && y) True supMin
+        allSupMin = foldr (&&) True supMin
         (smallestIdx, _) = findBest sumClasses (<)
         newPacks = mergeSmallestWithNeighbor packs smallestIdx
 
